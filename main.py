@@ -1,3 +1,8 @@
+#to print in different colors
+
+from colorama import Fore
+
+
 from spy_details import spy,Spy,ChatMessage,friends
 
 #import library for encoding and decoding data
@@ -88,21 +93,25 @@ def read_chat_history():
     read_for=select_friend()
 
 
-    print '\n6'
+
 
     #find the index of selected friend in the list
 
     for chat in friends[read_for].chats:
         # check if the message is send
 
-        if chat.send_by_me:
-
-            print '[%s] %s:%s'%(chat.time.strftime('%d %B %Y'),'You said',chat.message)
-        #or the message is recieved
+        if chat.sent_by_me:
+            print(Fore.BLUE + chat.time.strftime('%d %B %Y') +'you said'+ Fore.BLACK + chat.message)
 
         else:
 
-            print '[%s] %s said: %s'%(chat.time.strftime('%d %B %Y'),friends[read_for].name,chat.message)
+            print(Fore.BLUE + chat.time.strftime('%d %B %Y') + Fore.RED + friends[read_for].name + Fore.BLACK + chat.message)
+
+
+
+
+        #or the message is recieved
+
 
 
 
@@ -190,7 +199,7 @@ def add_friend():
 
     # class object new friend is initialised
 
-    new_friend=Spy('','',0,0)
+    new_friend=Spy('','',0,0.0)
     #get details of friend and save them in class variables
 
     new_friend.name=raw_input("please add your friend's name: ")
@@ -223,9 +232,11 @@ def select_friend():
 #Print out all the friends of the user
 
     for friend in friends:
-        print '%d %s %s aged %d with rating .2f is online' %(num+1,friend.salutation,friend.name,friend.age,                   friend.rating)
+        print '%d. %s %s aged %d with rating %.2f is online' % (num + 1, friend.salutation, friend.name,friend.age,friend.rating)
 
-        num=num+1
+
+
+        num = num +1
         #Ask the user to select from one of the friends
 
     friends_choise=raw_input('Choose from your friends')
@@ -243,7 +254,7 @@ def start_chat(spy):
 
     current_status_message= None
 
-    spy.name=spy.spy_salutation+ ' '+spy.name
+    spy.name=spy.salutation+ ' '+spy.name
 
 
     if spy.age>12 and spy.age<50:
@@ -272,9 +283,9 @@ def start_chat(spy):
 
                 elif menu_choise==2:
                     #call the function add_friend
-                    no.of_friends=add_friend()
+                    num_of_friends=add_friend()
 
-                    print 'you have %d friends'%(no.of_friends)
+                    print 'you have %d friends'%(num_of_friends)
 
                 elif menu_choise==3:
                     #call function read_message
@@ -363,9 +374,9 @@ else:
          # let's make this spy come online
 
             spy.is_online = True
-#One final message with all the details
 
-            print 'Authentication complete %s age: %d and rating of %d proud to have you on board'%(spy.name,                          spy.age,spy.rating)
+
+
             #calling fuction start chat
             start_chat(spy)
 

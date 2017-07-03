@@ -20,7 +20,13 @@ class Spy:
 #create class ChatMessage to save send and recieved messages seperately
 class ChatMessage:
     def __init__(self,message,sent_by_me):
+        #print appropriate message if these words are there included in message
+
+        words=['sos','save me','help','danger']
+
         self.message=message
+
+
 
         #if message is send then the value of sent_by_me will be true otherwise false if it is recieved
 
@@ -28,7 +34,8 @@ class ChatMessage:
 
         #The datetime module provides classes for manipulating dates and times.
         self.time=datetime.now()
-
+        if any(i in message for i in words):
+            print "It's urgent!!!!"
 
 #create class object spy to store default values of spy
 spy=Spy('Mudra','Ms',21,3.0)
